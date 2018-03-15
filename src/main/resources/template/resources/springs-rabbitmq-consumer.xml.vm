@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:rmq="http://www.mobanker.com/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.mobanker.com/schema/rabbit http://www.mobanker.com/schema/rabbit/mobanker-rabbit-1.0.xsd">
+
+    <!--绑定direct类型exchange-->
+    <rmq:queue id="bindToDirect" name="myDirectQueue" bind-exchange-type="direct" bind-exchange-name="myDirectExchange" binding-key="ooo"/>
+    <rmq:queue id="myOpenapi" name="topic-queue" bind-exchange-type="direct" bind-exchange-name="sjd-openapi-test-exchange" binding-key="sss"/>
+
+    <!--绑定default类型exchange-->
+    <rmq:queue id="infoTrade" name="log" bind-exchange-type="direct"/>
+
+    <!--绑定fanout类型exchange-->
+    <rmq:queue id="bindToFanout" name="asd" bind-exchange-type="fanout" bind-exchange-name="myFanoutExchange"/>
+
+    <!--绑定topic类型exchange-->
+    <rmq:queue id="bindToTopic" name="bindToTopic.queue" bind-exchange-type="topic" bind-exchange-name="xytopic" binding-key="*.123"/>
+    <!--<rmq:queue id="bindToTopic2" name="bindToTopic.queue2" bind-exchange-type="topic" bind-exchange-name="myTopicExchange" binding-key="*.late.data.key"/>-->
+
+
+    <!--支持以下3种converter，不选则默认为simpleMessageConverter-->
+    <!--<bean id="jackson2JsonMessageConverter" class="com.mobanker.component.rm.rabbitmq.converter.Jackson2JsonMessageConverter"/>-->
+    <bean id="simpleMessageConverter" class="com.mobanker.component.rm.rabbitmq.converter.SimpleMessageConverter"/>
+    <!-- <bean id="serializerMessageConverter" class="com.mobanker.component.rm.rabbitmq.converter.SerializerMessageConverter"/>-->
+
+    <!--消费者监听容器,监听到方法级别-->
+    <rmq:listener-container id="myListener" message-converter="simpleMessageConverter">
+        <!-- 必填项 queue-ref:依赖的queue  business-ref:业务处理类 method:业务方法 -->
+        <!-- 可选项 auto-ack:自动回执,默认为true  fetch-count:批处理数,默认为1  thread-num:并发数,默认为1 -->
+        <rmq:listener queue-ref="bindToDirect" method="processMessage" business-ref="userService" auto-ack="false"
+                      fetch-count="1" thread-num="1"/>
+
+    </rmq:listener-container>
+
+    <!--业务消费者处理类-->
+    <bean id="userService" class="com.mobanker.component.rm.example.bussiness.UserConsumerServiceImpl"/>
+
+</beans>

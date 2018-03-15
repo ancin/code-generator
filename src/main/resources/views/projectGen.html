@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>代码生成器</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="plugins/jqgrid/ui.jqgrid-bootstrap.css">
+
+    <link rel="stylesheet" href="css/bootstrapSwitch.css">
+    <link rel="stylesheet" href="css/bootstrapValidator.min.css">
+    <!--<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" />-->
+
+    <script src="libs/jquery.min.js"></script>
+    <script src="plugins/layer/layer.js"></script>
+    <script src="libs/bootstrap.min.js"></script>
+    <script src="libs/bootstrapSwitch.js"></script>
+    <script src="libs/bootstrapValidator.min.js"></script>
+    <script src="libs/vue.min.js"></script>
+    <script src="plugins/jqgrid/grid.locale-cn.js"></script>
+    <script src="plugins/jqgrid/jquery.jqGrid.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/projectGen.js"></script>
+</head>
+<body>
+<div class="container" id="projectDiv">
+    <div class="row">
+        <!-- form: -->
+        <section>
+            <div class="col-lg-8 col-lg-offset-2">
+                <form id="defaultForm" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Group ID</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" name="groupId" id="groupId"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Artifact ID</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" name="artifactId" id="artifactId"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-4">
+                            <div class="control-group">
+                                <label class="control-label" for="rabbitMQ">RabbitMQ</label>
+                                <div class="controls">
+                                    <div class="switch" tabindex="0" id="toggle-state-switch">
+                                        <input id="rabbitMQ" name="rabbitMQ" type="checkbox" checked/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--
+                        <div class="col-sm-4">
+                            <div class="control-group">
+                                <label class="control-label" for="kafka">Kafka</label>
+                                <div class="controls">
+                                    <div class="switch" tabindex="0" id="toggle-state-switch-kafka">
+                                        <input id="kafka" name="kafka" type="checkbox" checked/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">FX框架</label>
+                        <div class="col-md-4">
+                            <select class="selectpicker" id="fx_version" name="fx_version">
+                                <optgroup label="Default">
+                                    <option>2.2.1</option>
+                                    <option>2.1.0</option>
+                                    <option>2.0.0</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">项目类型</label>
+                        <div class="col-md-4">
+                            <select class="selectpicker" id="projectType" name="projectType">
+                                <optgroup label="Default">
+                                    <option>Netty</option>
+                                    <option>Tomcat</option>
+                                    <option>Jar</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">工程名</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" name="projectName" id="projectName"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">包名</label>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" name="package" id="package"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-3"></div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary" name="projectGen" id="projectGen" value="projectGen">生成</button>
+                            <button type="button" class="btn btn-info" id="resetBtn">重置</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+        <!-- :form -->
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var rabbitMq = true;
+        $('#toggle-state-switch').on('switch-change', function (e, data) {
+            var $el = $(data.el)
+                , value = data.value;
+            rabbitMq = value;
+            console.log(value);
+        });
+
+
+        $('#toggle-state-switch-button').on('click', function () {
+            $('#toggle-state-switch').bootstrapSwitch('toggleState');
+        });
+        $('#toggle-state-switch-button-on').on('click', function () {
+            console.log("ON");
+            $('#toggle-state-switch').bootstrapSwitch('setState', true);
+        });
+
+        $('#projectGen').on('click', function () {
+            console.log("==project gen.==");
+            var groupId = $("#groupId").val();
+            var artifactId = $("#artifactId").val();
+            if(isEmpty(groupId)||isEmpty(artifactId)){
+                return;
+            }
+            var projConig = {};
+            projConig.projectName = $("#projectName").val();
+            projConig.rabbitMq = rabbitMq;
+            projConig.fxVersion = $("#fx_version").val();
+            projConig.groupId = groupId;
+            projConig.artifactId = artifactId;
+            projConig.projectType=$("#projectType").val();
+
+            var pckage = $("#package").val();
+            if (pckage !== null || pckage !== undefined || pckage !== '') {
+                projConig.pckage = pckage;
+            }
+
+
+            var jsonConfig = JSON.stringify(projConig)
+            console.log(jsonConfig);
+            location.href = "/sys/generator/projectGen?projectConfig=" + encodeURI(JSON.stringify(jsonConfig));
+
+        });
+
+        $('#defaultForm').bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                groupId: {
+                    group: '.col-md-4',
+                    validators: {
+                        notEmpty: {
+                            message: 'The groupId is required and cannot be empty'
+                        },
+                        stringLength: {
+                            min: 6,
+                            max: 40,
+                            message: 'The groupId must be more than 6 and less than 30 characters long'
+                        }
+                    }
+                },
+                artifactId: {
+                    group: '.col-md-4',
+                    validators: {
+                        notEmpty: {
+                            message: 'The artifactId is required and cannot be empty'
+                        },
+                        stringLength: {
+                            min: 5,
+                            max: 40,
+                            message: 'The artifactId must be more than 6 and less than 30 characters long'
+                        }
+                    }
+                },
+                projectName: {
+                    group: '.col-md-4',
+                    validators: {
+                        notEmpty: {
+                            message: 'The project name is required and cannot be empty'
+                        }
+                    }
+                }
+                ///
+            }
+        });
+        $('#resetBtn').click(function() {
+            $('#defaultForm').data('bootstrapValidator').resetForm(true);
+        });
+
+    });
+
+    function isEmpty( str){
+        if (str == null || str == undefined || str == '') {
+            return true;
+        }
+        return false;
+    }
+</script>
+</body>
+</html>
