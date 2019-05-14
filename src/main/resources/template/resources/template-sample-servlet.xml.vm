@@ -15,7 +15,7 @@
     <!--注册annotation -->
     <context:annotation-config/>
     <!-- 自动扫描controller -->
-    <context:component-scan base-package="com.mobanker.component.rm.example.controller" name-generator="com.mobanker.framework.server.netty.spring.FullPackageBeanNameGenerator">
+    <context:component-scan base-package="com.mycom.component.rm.example.controller" name-generator="com.mycom.framework.server.netty.spring.FullPackageBeanNameGenerator">
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
     </context:component-scan>
 
@@ -35,7 +35,7 @@
         <!--异步支持-->
         <mvc:async-support default-timeout="10" task-executor="asyncTaskExecutor">
             <mvc:callable-interceptors>
-                <bean class="com.mobanker.framework.server.netty.servlet.async.AsyncInterceptor"/>
+                <bean class="com.mycom.framework.server.netty.servlet.async.AsyncInterceptor"/>
             </mvc:callable-interceptors>
         </mvc:async-support>
         <!--Configures one or more HttpMessageConverter types to use for converting @RequestBody method parameters and
@@ -47,11 +47,11 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
     <!--异步executor-->
-    <bean id="asyncTaskExecutor" class="com.mobanker.framework.server.netty.servlet.async.ThreadLocalAsyncExecutor"/>
+    <bean id="asyncTaskExecutor" class="com.mycom.framework.server.netty.servlet.async.ThreadLocalAsyncExecutor"/>
     <!--转换器-->
     <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
     </bean>
-    <!--<mvc:resources location="/views/" com.mobanker.component.logcenter.service.dao.html"/>-->
+    <!--<mvc:resources location="/views/" com.mycom.component.logcenter.service.dao.html"/>-->
 
     <!--国际化-->
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">

@@ -3,13 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <groupId>com.mobanker.component</groupId>
+        <groupId>com.ddd.component</groupId>
         <artifactId>rm-management</artifactId>
         <version>1.3.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.mobanker.framework</groupId>
+    <groupId>com.dd.framework</groupId>
     <artifactId>rm-example</artifactId>
     <packaging>jar</packaging>
 
@@ -18,17 +18,17 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>com.mobanker.component</groupId>
+            <groupId>com.dd.component</groupId>
             <artifactId>rm-rabbitmq</artifactId>
             <version>${version}</version>
         </dependency>
 
         <dependency>
-            <groupId>com.mobanker.framework</groupId>
-            <artifactId>mobanker-fx-netty</artifactId>
+            <groupId>com.ddd.framework</groupId>
+            <artifactId>dd-fx-netty</artifactId>
             <exclusions>
                 <exclusion>
-                    <groupId>com.mobanker.config</groupId>
+                    <groupId>com.dd.config</groupId>
                     <artifactId>zookeeperConfig</artifactId>
                 </exclusion>
             </exclusions>
@@ -47,7 +47,7 @@
             <artifactId>spring-webmvc</artifactId>
         </dependency>
         <!-- <dependency>
-             <groupId>com.mobanker.sgp</groupId>
+             <groupId>com.dd.sgp</groupId>
              <artifactId>fx-sgp-client</artifactId>
              <version>3.1.0</version>
          </dependency>-->
@@ -56,27 +56,27 @@
             <artifactId>log4j</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.mobanker.component</groupId>
+            <groupId>com.dd.component</groupId>
             <artifactId>logagent-logback</artifactId>
         </dependency>
         <!--
                 <dependency>
-                    <groupId>com.mobanker.snowwalking</groupId>
+                    <groupId>com.dd.snowwalking</groupId>
                     <artifactId>springmvc-plugin</artifactId>
                     <version>1.0.0-SNAPSHOT</version>
                 </dependency>
                 <dependency>
-                    <groupId>com.mobanker.snowwalking</groupId>
+                    <groupId>com.dd.snowwalking</groupId>
                     <artifactId>dubbo-plugin</artifactId>
                     <version>1.0.0-SNAPSHOT</version>
                 </dependency>
                 <dependency>
-                    <groupId>com.mobanker.snowwalking</groupId>
+                    <groupId>com.dd.snowwalking</groupId>
                     <artifactId>http-apache4.0-plugin</artifactId>
                     <version>1.0.0-SNAPSHOT</version>
                 </dependency>
                 <dependency>
-                    <groupId>com.mobanker.snowwalking</groupId>
+                    <groupId>com.dd.snowwalking</groupId>
                     <artifactId>rabbitmq-plugin</artifactId>
                     <version>1.0.0-SNAPSHOT</version>
                 </dependency>-->
@@ -91,20 +91,20 @@
             <version>1.7.25</version>
         </dependency>-->
         <dependency>
-            <groupId>com.mobanker.snowwalking</groupId>
+            <groupId>com.dd.snowwalking</groupId>
             <artifactId>apm-agent-core</artifactId>
             <version>1.0.0-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.mobanker.snowwalking</groupId>
+            <groupId>com.dd.snowwalking</groupId>
             <artifactId>apm-agent</artifactId>
             <version>1.0.0-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.mobanker.framework</groupId>
-            <artifactId>mobanker-framework</artifactId>
+            <groupId>com.dd.framework</groupId>
+            <artifactId>dd-framework</artifactId>
             <version>3.3.0-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -144,7 +144,7 @@
                                 <transformer
                                         implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>
-                                        com.mobanker.component.rm.example.RmExampleApplication
+                                        com.dd.component.rm.example.RmExampleApplication
                                     </mainClass>
                                 </transformer>
                                 <transformer

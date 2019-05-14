@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:rmq="http://www.mobanker.com/schema/rabbit"
+       xmlns:rmq="http://www.mycom.com/schema/rabbit"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.mobanker.com/schema/rabbit http://www.mobanker.com/schema/rabbit/mobanker-rabbit-1.0.xsd">
+        http://www.mycom.com/schema/rabbit http://www.mycom.com/schema/rabbit/mycom-rabbit-1.0.xsd">
 
     <!--绑定direct类型exchange-->
     <rmq:queue id="bindToDirect" name="myDirectQueue" bind-exchange-type="direct" bind-exchange-name="myDirectExchange" binding-key="ooo"/>
@@ -21,9 +21,9 @@
 
 
     <!--支持以下3种converter，不选则默认为simpleMessageConverter-->
-    <!--<bean id="jackson2JsonMessageConverter" class="com.mobanker.component.rm.rabbitmq.converter.Jackson2JsonMessageConverter"/>-->
-    <bean id="simpleMessageConverter" class="com.mobanker.component.rm.rabbitmq.converter.SimpleMessageConverter"/>
-    <!-- <bean id="serializerMessageConverter" class="com.mobanker.component.rm.rabbitmq.converter.SerializerMessageConverter"/>-->
+    <!--<bean id="jackson2JsonMessageConverter" class="com.mycom.component.rm.rabbitmq.converter.Jackson2JsonMessageConverter"/>-->
+    <bean id="simpleMessageConverter" class="com.mycon.component.rm.rabbitmq.converter.SimpleMessageConverter"/>
+    <!-- <bean id="serializerMessageConverter" class="com.mycom.component.rm.rabbitmq.converter.SerializerMessageConverter"/>-->
 
     <!--消费者监听容器,监听到方法级别-->
     <rmq:listener-container id="myListener" message-converter="simpleMessageConverter">
@@ -35,6 +35,6 @@
     </rmq:listener-container>
 
     <!--业务消费者处理类-->
-    <bean id="userService" class="com.mobanker.component.rm.example.bussiness.UserConsumerServiceImpl"/>
+    <bean id="userService" class="com.mycom.component.rm.example.bussiness.UserConsumerServiceImpl"/>
 
 </beans>

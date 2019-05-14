@@ -71,7 +71,7 @@ public class ProjectGen {
             StringWriter consw = new StringWriter();
             Template controllerTempl = Velocity.getTemplate("template/Controller.java.vm", "UTF-8");
             controllerTempl.merge(velocityCtx, consw);
-            zip.putNextEntry(new ZipEntry(getFileName(Constant.PROJECTCORE, "com.mobanker.core", "ql-template")));
+            zip.putNextEntry(new ZipEntry(getFileName(Constant.PROJECTCORE, "com.ddd.core", "ql-template")));
             IOUtils.write(consw.toString(), zip, "UTF-8");
 
             addResources(zip,velocityCtx);
@@ -97,8 +97,8 @@ public class ProjectGen {
         String mainRes = Constant.PROJECTNAME+File.separator +Constant.PROJECTCORE + File.separator + "src" + File.separator + "main" + File.separator + "resources";
 
         try {
-            String mobankerProp = mainRes + File.separator + "mobanker.properties";
-            generateFile(zip,velocityCtx,"template/resources/mobanker.properties.vm",mobankerProp);
+            String mdProp = mainRes + File.separator + "dd.properties";
+            generateFile(zip,velocityCtx,"template/resources/dd.properties.vm",ddd);
 
             //app
             String appxml = mainRes + File.separator + "template-sample-application.xml";

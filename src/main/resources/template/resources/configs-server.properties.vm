@@ -2,8 +2,8 @@
 netty.http.server.port=62571
 netty.http.server.charset.name=UTF-8
 #netty.http.server.maxContentLength = 1024000000
-#netty.http.server.springApplicationContext=classpath:mobanker-application.xml
-#netty.http.server.springServletContext=classpath:mobanker-logagent-example-servlet.xml
+#netty.http.server.springApplicationContext=classpath:mycom-application.xml
+#netty.http.server.springServletContext=classpath:mycom-logagent-example-servlet.xml
 ###################################### Support Https ##########################################
 netty.https.server.port=443
 netty.https.server.ssl=false

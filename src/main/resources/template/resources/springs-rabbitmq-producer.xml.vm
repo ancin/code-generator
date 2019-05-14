@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:rmq="http://www.mobanker.com/schema/rabbit"
+       xmlns:rmq="http://www.mycom.com/schema/rabbit"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.mobanker.com/schema/rabbit http://www.mobanker.com/schema/rabbit/mobanker-rabbit-1.0.xsd">
+        http://www.ddd.com/schema/rabbit http://www.mycom.com/schema/rabbit/ddd-rabbit-1.0.xsd">
     <!--&lt;!&ndash;direct模式&ndash;&gt;-->
     <rmq:direct-exchange id="myDirectExchange" name="myDirectExchange" routing-key="ooo"/>
 
@@ -19,8 +19,8 @@
 
     <!--支持以下3种converter，不选则默认为simpleMessageConverter-->
     <bean id="jackson2JsonMessageConverter"
-          class="com.mobanker.component.rm.rabbitmq.converter.Jackson2JsonMessageConverter"/>
-    <bean id="simpleMessageConverter" class="com.mobanker.component.rm.rabbitmq.converter.SimpleMessageConverter"/>
+          class="com.dd.component.rm.rabbitmq.converter.Jackson2JsonMessageConverter"/>
+    <bean id="simpleMessageConverter" class="com.ddd.component.rm.rabbitmq.converter.SimpleMessageConverter"/>
 
     <!--消息发送类-->
     <rmq:template id="myTemplate" exchange-ref="myDirectExchange" message-converter="simpleMessageConverter"/>
